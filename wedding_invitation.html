@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Royal Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        royalGold: '#D4AF37',
+                        goldLight: '#F3E5AB',
+                        goldDark: '#996515',
+                        crimson: '#7A1515',
+                        crimsonDeep: '#4A0808',
+                        ivory: '#FDF6E3',
+                        ivoryWarm: '#F7E7CE',
+                    },
+                    fontFamily: {
+                        cinzel: ['"Cinzel Decorative"', 'serif'],
+                        cormorant: ['"Cormorant Garamond"', 'serif'],
+                        script: ['"Great Vibes"', 'cursive'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Royal Animations & Ornate Textures */
+        :root {
+            --gold: #D4AF37;
+            --gold-bright: #FCE28B;
+            --crimson: #7A1515;
+            --crimson-dark: #420707;
+            --ivory: #FDF6E3;
+        }
+
+        body {
+            background-color: var(--ivory);
+            color: #3B1810;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Damask / Palace Wall Subtle Pattern */
+        .palace-pattern {
+            background-color: #FDF6E3;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 70%),
+                repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.04) 0px, rgba(212, 175, 55, 0.04) 2px, transparent 2px, transparent 12px),
+                repeating-linear-gradient(-45deg, rgba(212, 175, 55, 0.04) 0px, rgba(212, 175, 55, 0.04) 2px, transparent 2px, transparent 12px);
+        }
+
+        /* Metallic Gold Shimmer Text */
+        .gold-foil-text {
+            background: linear-gradient(135deg, #8A6012 0%, #D4AF37 25%, #FFF2B2 50%, #C59B27 75%, #7E530A 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 5s linear infinite;
+        }
+
+        .gold-foil-light {
+            background: linear-gradient(135deg, #D4AF37 0%, #FFF5C3 40%, #F1C94B 60%, #B8860B 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        /* Opening Royal Gates / Curtains */
+        .gate-left, .gate-right {
+            transition: transform 1.6s cubic-bezier(0.77, 0, 0.175, 1);
+            will-change: transform;
+        }
+        .gates-opened .gate-left {
+            transform: translateX(-102%);
+        }
+        .gates-opened .gate-right {
+            transform: translateX(102%);
+        }
+        .gates-opened .seal-container {
+            opacity: 0;
+            transform: scale(1.3);
+            pointer-events: none;
+            transition: all 0.7s ease-out;
+        }
+
+        /* Velvet Curtain Fold Texture */
+        .velvet-crimson {
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(0,0,0,0.28) 0px,
+                    rgba(255,255,255,0.04) 18px,
+                    rgba(0,0,0,0.35) 36px
+                ),
+                radial-gradient(circle at center, #8C1919 0%, #480707 100%);
+        }
+
+        /* Swaying Bells & Garlands */
+        @keyframes swayBell {
+            0%, 100% { transform: rotate(-4deg); }
+            50% { transform: rotate(4deg); }
+        }
+        @keyframes swayBellSlow {
+            0%, 100% { transform: rotate(3deg); }
+            50% { transform: rotate(-3deg); }
+        }
+        .bell-sway {
+            transform-origin: top center;
+            animation: swayBell 3.4s ease-in-out infinite;
+        }
+        .bell-sway-alt {
+            transform-origin: top center;
+            animation: swayBellSlow 4.1s ease-in-out infinite;
+        }
+
+        /* Flickering Diya Flame */
+        @keyframes flicker {
+            0%, 100% { transform: scale(1) rotate(-1deg); opacity: 0.95; }
+            25% { transform: scale(1.06, 0.96) rotate(2deg); opacity: 1; }
+            50% { transform: scale(0.95, 1.05) rotate(-2deg); opacity: 0.88; }
+            75% { transform: scale(1.04) rotate(1deg); opacity: 0.98; }
+        }
+        .diya-flame {
+            transform-origin: bottom center;
+            animation: flicker 1.8s infinite ease-in-out;
+        }
+
+        /* Staggered Reveal Animations */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 1s ease-out, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .invitation-active .reveal-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-100 { transition-delay: 0.2s; }
+        .delay-200 { transition-delay: 0.45s; }
+        .delay-300 { transition-delay: 0.7s; }
+        .delay-400 { transition-delay: 0.95s; }
+        .delay-500 { transition-delay: 1.2s; }
+        .delay-600 { transition-delay: 1.45s; }
+
+        /* Floating Rose Petals Canvas */
+        #petal-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 30;
+        }
+
+        /* Ornate Gold Border Frame */
+        .royal-card-border {
+            border: 2px solid #D4AF37;
+            box-shadow: 
+                0 15px 40px -10px rgba(74, 8, 8, 0.25),
+                inset 0 0 0 5px #FDF6E3,
+                inset 0 0 0 6px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Pulse Ring for Wax Seal */
+        @keyframes pulseGold {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.75); }
+            70% { box-shadow: 0 0 0 22px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+        .seal-pulse {
+            animation: pulseGold 2.2s infinite;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #FDF6E3; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 999px; }
+    </style>
+</head>
+<body class="palace-pattern font-cormorant antialiased selection:bg-royalGold/30 selection:text-crimson">
+
+    <!-- Floating Rose Petals Canvas -->
+    <canvas id="petal-canvas"></canvas>
+
+    <!-- ===================================================================== -->
+    <!-- 1. GRAND OPENING ROYAL GATE / CURTAIN SCREEN                          -->
+    <!-- ===================================================================== -->
+    <div id="opening-overlay" class="fixed inset-0 z-50 flex items-center justify-center overflow-hidden">
+        <!-- Left Palace Gate / Velvet Curtain -->
+        <div class="gate-left velvet-crimson relative w-1/2 h-full border-r-4 border-royalGold flex items-center justify-end shadow-2xl">
+            <!-- Ornate Gold Arch Half SVG -->
+            <div class="w-48 sm:w-72 md:w-96 h-full flex items-center justify-end opacity-35 pointer-events-none">
+                <svg viewBox="0 0 200 600" class="h-full w-auto fill-none stroke-royalGold" stroke-width="2">
+                    <path d="M200,20 C120,20 80,90 80,180 L80,580 L200,580" />
+                    <path d="M200,45 C135,45 105,105 105,185 L105,560 L200,560" stroke-dasharray="6 4"/>
+                    <circle cx="145" cy="300" r="45" />
+                    <circle cx="145" cy="300" r="32" />
+                    <path d="M145,240 L145,360 M85,300 L200,300" />
+                </svg>
+            </div>
+        </div>
+
+        <!-- Right Palace Gate / Velvet Curtain -->
+        <div class="gate-right velvet-crimson relative w-1/2 h-full border-l-4 border-royalGold flex items-center justify-start shadow-2xl">
+            <div class="w-48 sm:w-72 md:w-96 h-full flex items-center justify-start opacity-35 pointer-events-none">
+                <svg viewBox="0 0 200 600" class="h-full w-auto fill-none stroke-royalGold" stroke-width="2">
+                    <path d="M0,20 C80,20 120,90 120,180 L120,580 L0,580" />
+                    <path d="M0,45 C65,45 95,105 95,185 L95,560 L0,560" stroke-dasharray="6 4"/>
+                    <circle cx="55" cy="300" r="45" />
+                    <circle cx="55" cy="300" r="32" />
+                    <path d="M55,240 L55,360 M0,300 L115,300" />
+                </svg>
+            </div>
+        </div>
+
+        <!-- Center Mandala Wax Seal Button & Preview Crest -->
+        <div class="seal-container absolute inset-0 flex flex-col items-center justify-center z-10 px-4 text-center pointer-events-auto">
+            <div class="mb-6 bg-crimsonDeep/85 backdrop-blur-md border border-royalGold/60 px-6 py-3 rounded-full shadow-xl">
+                <p class="font-cinzel text-xs sm:text-sm tracking-[0.28em] text-goldLight uppercase">Shubh Vivah • Royal Invitation</p>
+            </div>
+
+            <h1 id="gate-couple-names" class="font-script text-5xl sm:text-7xl gold-foil-light drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] mb-8 px-2">
+                Naga Dileep &amp; Mounika Naga Lakshmi Durga
+            </h1>
+
+            <!-- Interactive Golden Mandala Seal -->
+            <button id="open-invitation-btn" aria-label="Open Royal Invitation"
+                class="group relative w-36 h-36 sm:w-44 sm:h-44 rounded-full bg-gradient-to-br from-[#F7E08B] via-[#D4AF37] to-[#8C6214] p-1.5 seal-pulse cursor-pointer transition-transform duration-300 hover:scale-105 active:scale-95 shadow-[0_10px_40px_rgba(0,0,0,0.75)]">
+                <div class="w-full h-full rounded-full bg-crimsonDeep border-2 border-goldLight flex flex-col items-center justify-center p-3 relative overflow-hidden">
+                    <!-- Rotating Mandala Ring -->
+                    <svg class="absolute inset-1 w-[calc(100%-8px)] h-[calc(100%-8px)] text-royalGold/40 animate-[spin_22s_linear_infinite]" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+                        <circle cx="50" cy="50" r="36" fill="none" stroke="currentColor" stroke-width="1"/>
+                        <polygon points="50,6 60,40 94,50 60,60 50,94 40,60 6,50 40,40" fill="none" stroke="currentColor" stroke-width="1"/>
+                    </svg>
+                    
+                    <!-- Auspicious Om / Kalash Emblem -->
+                    <span class="text-2xl sm:text-3xl text-goldLight mb-1 drop-shadow">ॐ</span>
+                    <span class="font-cinzel text-[11px] sm:text-xs font-bold tracking-[0.18em] text-goldLight uppercase leading-tight">
+                        Open Royal<br>Invitation
+                    </span>
+                </div>
+            </button>
+
+            <p class="mt-6 text-goldLight/85 font-cormorant italic text-base sm:text-lg tracking-wide">
+                Tap the royal seal to enter the Mandap
+            </p>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- FLOATING TOP CONTROLS (Music Toggle & Replay)                         -->
+    <!-- ===================================================================== -->
+    <header class="fixed top-0 inset-x-0 z-40 pointer-events-none px-3 py-3 sm:px-6 sm:py-4 flex items-center justify-between">
+        <!-- Left: Music Toggle & Replay -->
+        <div class="flex items-center gap-2 pointer-events-auto">
+            <button id="music-toggle-btn" title="Toggle Auspicious Wedding Chimes"
+                class="flex items-center gap-2 bg-crimsonDeep/90 hover:bg-crimson text-goldLight border border-royalGold/70 px-3.5 py-2 rounded-full shadow-lg backdrop-blur-md transition-all text-xs sm:text-sm font-sans font-medium cursor-pointer">
+                <span id="music-icon" class="text-base">🔇</span>
+                <span id="music-label" class="hidden sm:inline">Play Music</span>
+            </button>
+
+            <button id="replay-btn" title="Replay Grand Gate Opening"
+                class="flex items-center gap-1.5 bg-ivory/95 hover:bg-white text-crimson border border-royalGold px-3.5 py-2 rounded-full shadow-lg backdrop-blur-md transition-all text-xs sm:text-sm font-sans font-medium cursor-pointer">
+                <span>✨</span>
+                <span class="hidden sm:inline">Replay</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===================================================================== -->
+    <!-- MAIN INVITATION CONTENT                                               -->
+    <!-- ===================================================================== -->
+    <main id="main-invitation" class="relative z-10 pb-20">
+
+        <!-- ================================================================= -->
+        <!-- 2. HERO: GOLDEN MANDAP ARCH & ANIMATED INVITATION CARD            -->
+        <!-- ================================================================= -->
+        <section class="relative min-h-screen flex flex-col items-center justify-center pt-16 pb-12 px-3 sm:px-6 overflow-hidden">
+            
+            <!-- Default Attached Golden Mandap Backdrop Image -->
+            <div class="absolute inset-0 z-0">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAgACAQMAAADn7vKPAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAAlwSFlzAAALEwAACxMBAJqcGAAAN3dJREFUeF7svT2uJct2lgl0GCHoP4QQAiGQk8f//+3+XW/u3c2t84C6X9jKksQ+A6HQQwAI0M2D8v75aL830bBv+7ufn/8s7q82nU/uW3Z4n57r/bXm927OvvO/72d257/* ...base64 background data... */" alt="Golden Mandap" class="w-full h-full object-cover object-center opacity-35">
+                <div class="absolute inset-0 bg-gradient-to-b from-ivory/85 via-ivory/75 to-ivory"></div>
+            </div>
+
+            <!-- Main Royal Mandap Frame Card -->
+            <div class="relative z-10 w-full max-w-4xl mx-auto rounded-[2rem] bg-gradient-to-b from-[#FFFDF7] via-[#FDF6E3] to-[#F7E7CE] royal-card-border overflow-hidden shadow-2xl">
+                
+                <!-- Top Ornate Scalloped Golden Palace Arch & Hanging Temple Bells SVG -->
+                <div class="relative w-full overflow-hidden">
+                    <svg viewBox="0 0 900 230" class="w-full h-auto block" preserveAspectRatio="xMidYMin slice">
+                        <defs>
+                            <linearGradient id="goldArchGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#996515"/>
+                                <stop offset="30%" stop-color="#F3E5AB"/>
+                                <stop offset="50%" stop-color="#D4AF37"/>
+                                <stop offset="75%" stop-color="#FFF2B2"/>
+                                <stop offset="100%" stop-color="#8A6012"/>
+                            </linearGradient>
+                            <linearGradient id="crimsonHeaderGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#5E0B0B"/>
+                                <stop offset="100%" stop-color="#8A1919"/>
+                            </linearGradient>
+                            <radialGradient id="bellGlow" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#FFF5C0"/>
+                                <stop offset="60%" stop-color="#D4AF37"/>
+                                <stop offset="100%" stop-color="#7E530A"/>
+                            </radialGradient>
+                        </defs>
+
+                        <!-- Deep Crimson Carved Arch Spandrel -->
+                        <path d="M0,0 L900,0 L900,195 C830,195 790,130 720,125 C650,120 610,75 540,75 C495,75 470,40 450,25 C430,40 405,75 360,75 C290,75 250,120 180,125 C110,130 70,195 0,195 Z" fill="url(#crimsonHeaderGrad)"/>
+                        
+                        <!-- Double Scalloped Gold Arch Trim -->
+                        <path d="M0,195 C70,195 110,130 180,125 C250,120 290,75 360,75 C405,75 430,40 450,25 C470,40 495,75 540,75 C610,75 650,120 720,125 C790,130 830,195 900,195" fill="none" stroke="url(#goldArchGrad)" stroke-width="10"/>
+                        <path d="M0,180 C65,180 105,118 175,113 C245,108 285,63 355,63 C400,63 428,30 450,15 C472,30 500,63 545,63 C615,63 655,108 725,113 C795,118 835,180 900,180" fill="none" stroke="#F3E5AB" stroke-width="2.5" stroke-dasharray="6 4"/>
+
+                        <!-- Decorative Rose & Jasmine Garlands Along Arch -->
+                        <g fill="#C81D32">
+                            <circle cx="95" cy="145" r="9"/><circle cx="155" cy="126" r="10"/><circle cx="225" cy="108" r="9"/>
+                            <circle cx="295" cy="84" r="10"/><circle cx="370" cy="72" r="9"/><circle cx="530" cy="72" r="9"/>
+                            <circle cx="605" cy="84" r="10"/><circle cx="675" cy="108" r="9"/><circle cx="745" cy="126" r="10"/>
+                            <circle cx="805" cy="145" r="9"/>
+                        </g>
+                        <g fill="#FDF6E3">
+                            <circle cx="125" cy="135" r="5"/><circle cx="190" cy="118" r="5"/><circle cx="260" cy="96" r="5"/>
+                            <circle cx="332" cy="77" r="5"/><circle cx="568" cy="77" r="5"/><circle cx="640" cy="96" r="5"/>
+                            <circle cx="710" cy="118" r="5"/><circle cx="775" cy="135" r="5"/>
+                        </g>
+
+                        <!-- Left Hanging Temple Bells -->
+                        <g class="bell-sway" style="transform-origin: 210px 115px;">
+                            <line x1="210" y1="115" x2="210" y2="175" stroke="#D4AF37" stroke-width="2.5"/>
+                            <path d="M196,175 Q210,162 224,175 L230,196 L190,196 Z" fill="url(#bellGlow)" stroke="#7E530A" stroke-width="1.2"/>
+                            <circle cx="210" cy="200" r="4.5" fill="#F3E5AB"/>
+                        </g>
+                        <g class="bell-sway-alt" style="transform-origin: 275px 92px;">
+                            <line x1="275" y1="92" x2="275" y2="138" stroke="#D4AF37" stroke-width="2"/>
+                            <path d="M265,138 Q275,128 285,138 L289,154 L261,154 Z" fill="url(#bellGlow)" stroke="#7E530A" stroke-width="1"/>
+                            <circle cx="275" cy="157" r="3.5" fill="#F3E5AB"/>
+                        </g>
+
+                        <!-- Right Hanging Temple Bells -->
+                        <g class="bell-sway-alt" style="transform-origin: 690px 115px;">
+                            <line x1="690" y1="115" x2="690" y2="175" stroke="#D4AF37" stroke-width="2.5"/>
+                            <path d="M676,175 Q690,162 704,175 L710,196 L670,196 Z" fill="url(#bellGlow)" stroke="#7E530A" stroke-width="1.2"/>
+                            <circle cx="690" cy="200" r="4.5" fill="#F3E5AB"/>
+                        </g>
+                        <g class="bell-sway" style="transform-origin: 625px 92px;">
+                            <line x1="625" y1="92" x2="625" y2="138" stroke="#D4AF37" stroke-width="2"/>
+                            <path d="M615,138 Q625,128 635,138 L639,154 L611,154 Z" fill="url(#bellGlow)" stroke="#7E530A" stroke-width="1"/>
+                            <circle cx="625" cy="157" r="3.5" fill="#F3E5AB"/>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- Golden Pillars Framing Left & Right (Desktop/Tablet) -->
+                <div class="hidden sm:block absolute top-36 bottom-16 left-3 w-7 rounded-full bg-gradient-to-r from-[#996515] via-[#F3E5AB] to-[#996515] opacity-45 border border-royalGold/50 pointer-events-none"></div>
+                <div class="hidden sm:block absolute top-36 bottom-16 right-3 w-7 rounded-full bg-gradient-to-r from-[#996515] via-[#F3E5AB] to-[#996515] opacity-45 border border-royalGold/50 pointer-events-none"></div>
+
+                <!-- Center Invitation Typography & Royal Details -->
+                <div class="relative px-6 sm:px-16 pb-10 pt-2 text-center">
+                    
+                    <!-- Auspicious Invocation -->
+                    <div class="reveal-item delay-100 flex flex-col items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-crimson/10 border border-royalGold/60 flex items-center justify-center mb-2 shadow-inner">
+                            <span class="text-2xl text-crimson">ॐ</span>
+                        </div>
+                        <p class="font-cinzel text-xs sm:text-sm tracking-[0.25em] text-crimson font-bold uppercase">
+                            || Shree Ganeshaya Namah ||
+                        </p>
+                    </div>
+
+                    <!-- Host Families & Invitation Preamble -->
+                    <p class="reveal-item delay-200 font-cormorant text-lg sm:text-xl text-[#5C2A1D] max-w-2xl mx-auto leading-relaxed">
+                        With the blessings of God and our elders,<br>
+                        <span class="font-semibold text-crimson">we invite you to celebrate the wedding of</span>
+                    </p>
+
+                    <!-- Groom & Bride Royal Monogram / Names -->
+                    <div class="reveal-item delay-300 my-7 sm:my-9 relative py-4">
+                        <!-- Subtle Mandala Watermark behind Names -->
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10">
+                            <svg class="w-64 h-64 text-royalGold" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/>
+                                <polygon points="50,4 62,38 96,50 62,62 50,96 38,62 4,50 38,38" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+
+                        <h2 class="font-script text-5xl sm:text-7xl md:text-8xl gold-foil-text leading-tight py-1 drop-shadow-sm px-2">
+                            Naga Dileep
+                        </h2>
+                        <div class="flex items-center justify-center gap-4 my-1">
+                            <span class="h-[1px] w-14 sm:w-24 bg-gradient-to-r from-transparent to-royalGold"></span>
+                            <span class="font-cinzel text-xl sm:text-2xl text-crimson italic font-bold">&amp;</span>
+                            <span class="h-[1px] w-14 sm:w-24 bg-gradient-to-l from-transparent to-royalGold"></span>
+                        </div>
+                        <h2 class="font-script text-4xl sm:text-6xl md:text-7xl gold-foil-text leading-tight py-1 drop-shadow-sm px-2">
+                            Mounika Naga Lakshmi Durga
+                        </h2>
+                        <p class="mt-2 font-cormorant italic text-base sm:text-lg text-[#6D3B2E]">
+                            (Daughter of Mrs. Lakshmi &amp; Mr. Venkata Kondanda Rama Rao)
+                        </p>
+                    </div>
+
+                    <!-- Decorative Divider -->
+                    <div class="reveal-item delay-400 flex items-center justify-center gap-3 my-6">
+                        <span class="h-[1.5px] w-16 sm:w-28 bg-royalGold/60"></span>
+                        <span class="text-royalGold text-lg">❖</span>
+                        <span class="h-[1.5px] w-16 sm:w-28 bg-royalGold/60"></span>
+                    </div>
+
+                    <!-- Wedding Date, Time & Royal Venue Box -->
+                    <div class="reveal-item delay-500 max-w-xl mx-auto bg-white/75 backdrop-blur-sm border border-royalGold/70 rounded-2xl p-6 sm:p-8 shadow-md">
+                        <p class="font-cinzel text-xs sm:text-sm tracking-[0.22em] text-crimson uppercase font-bold mb-2">
+                            Save The Auspicious Date
+                        </p>
+                        <p class="font-cinzel text-2xl sm:text-3xl font-bold text-[#3B1810] tracking-wide">
+                            Thursday, 26th November 2026
+                        </p>
+               
+                        <div class="my-4 border-t border-royalGold/30"></div>
+
+                        <p class="font-cinzel text-xl sm:text-2xl font-bold text-crimson">
+                            East Vipparru
+                        </p>
+                        <p class="font-cormorant text-lg text-[#5C2A1D]">
+                            3-18, Near Krishna Temple, East Vipparru, West Godavari District
+                        </p>
+                    </div>
+
+                    <!-- Live Wedding Countdown Timer -->
+                    <div class="reveal-item delay-600 mt-8">
+                        <p class="font-cinzel text-xs tracking-[0.25em] text-goldDark uppercase font-bold mb-3">
+                            Counting Down To The Sacred Union
+                        </p>
+                        <div class="grid grid-cols-4 gap-2 sm:gap-4 max-w-md mx-auto">
+                            <div class="bg-crimsonDeep text-ivory rounded-xl p-2.5 sm:p-3.5 border border-royalGold shadow">
+                                <span id="cd-days" class="block font-cinzel text-xl sm:text-3xl font-bold text-goldLight">00</span>
+                                <span class="text-[10px] sm:text-xs font-sans uppercase tracking-wider text-goldLight/80">Days</span>
+                            </div>
+                            <div class="bg-crimsonDeep text-ivory rounded-xl p-2.5 sm:p-3.5 border border-royalGold shadow">
+                                <span id="cd-hours" class="block font-cinzel text-xl sm:text-3xl font-bold text-goldLight">00</span>
+                                <span class="text-[10px] sm:text-xs font-sans uppercase tracking-wider text-goldLight/80">Hours</span>
+                            </div>
+                            <div class="bg-crimsonDeep text-ivory rounded-xl p-2.5 sm:p-3.5 border border-royalGold shadow">
+                                <span id="cd-mins" class="block font-cinzel text-xl sm:text-3xl font-bold text-goldLight">00</span>
+                                <span class="text-[10px] sm:text-xs font-sans uppercase tracking-wider text-goldLight/80">Mins</span>
+                            </div>
+                            <div class="bg-crimsonDeep text-ivory rounded-xl p-2.5 sm:p-3.5 border border-royalGold shadow">
+                                <span id="cd-secs" class="block font-cinzel text-xl sm:text-3xl font-bold text-goldLight">00</span>
+                                <span class="text-[10px] sm:text-xs font-sans uppercase tracking-wider text-goldLight/80">Secs</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Glowing Brass Diyas Row & Directions Button -->
+                    <div class="mt-10 flex items-end justify-between px-2 sm:px-8 pt-2">
+                        <!-- Left Brass Diya SVG -->
+                        <div class="flex flex-col items-center">
+                            <svg class="w-16 h-20 sm:w-20 sm:h-24" viewBox="0 0 100 120">
+                                <ellipse cx="50" cy="36" rx="18" ry="26" fill="rgba(255, 200, 50, 0.25)" class="diya-flame"/>
+                                <path d="M50,14 C58,28 60,40 50,48 C40,40 42,28 50,14 Z" fill="#FF9E00" class="diya-flame"/>
+                                <path d="M50,22 C54,30 55,39 50,45 C45,39 46,30 50,22 Z" fill="#FFF7B2" class="diya-flame"/>
+                                <path d="M22,52 Q50,68 78,52 L68,72 Q50,78 32,72 Z" fill="url(#goldArchGrad)" stroke="#7E530A" stroke-width="1.5"/>
+                                <rect x="44" y="72" width="12" height="24" rx="3" fill="url(#goldArchGrad)"/>
+                                <ellipse cx="50" cy="100" rx="24" ry="7" fill="url(#goldArchGrad)" stroke="#7E530A" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+
+                        <!-- Venue Directions Action Button -->
+                        <div class="flex items-center justify-center pb-2">
+                            <a href="https://www.google.com/maps/search/?api=1&query=3-18+Near+Krishna+Temple+East+Vipparru+West+Godavari+District" target="_blank" rel="noopener noreferrer"
+                                class="inline-flex items-center gap-2 bg-crimson hover:bg-crimsonDeep text-goldLight font-sans text-xs sm:text-sm font-medium px-6 py-3 rounded-full border border-royalGold shadow-lg transition">
+                                <span>📍</span>
+                                <span>Venue Directions</span>
+                            </a>
+                        </div>
+
+                        <!-- Right Brass Diya SVG -->
+                        <div class="flex flex-col items-center">
+                            <svg class="w-16 h-20 sm:w-20 sm:h-24" viewBox="0 0 100 120">
+                                <ellipse cx="50" cy="36" rx="18" ry="26" fill="rgba(255, 200, 50, 0.25)" class="diya-flame"/>
+                                <path d="M50,14 C58,28 60,40 50,48 C40,40 42,28 50,14 Z" fill="#FF9E00" class="diya-flame"/>
+                                <path d="M50,22 C54,30 55,39 50,45 C45,39 46,30 50,22 Z" fill="#FFF7B2" class="diya-flame"/>
+                                <path d="M22,52 Q50,68 78,52 L68,72 Q50,78 32,72 Z" fill="url(#goldArchGrad)" stroke="#7E530A" stroke-width="1.5"/>
+                                <rect x="44" y="72" width="12" height="24" rx="3" fill="url(#goldArchGrad)"/>
+                                <ellipse cx="50" cy="100" rx="24" ry="7" fill="url(#goldArchGrad)" stroke="#7E530A" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Regal Royal Crest & Family Blessings Footer -->
+        <footer class="max-w-2xl mx-auto text-center pt-4 pb-10 px-6 text-[#6D3B2E]">
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <span class="h-[1px] w-16 sm:w-24 bg-royalGold/70"></span>
+                <div class="w-11 h-11 rounded-full bg-crimsonDeep text-goldLight border border-royalGold flex items-center justify-center shadow">
+                    <span class="font-cinzel text-sm font-bold">ॐ</span>
+                </div>
+                <span class="h-[1px] w-16 sm:w-24 bg-royalGold/70"></span>
+            </div>
+            <p class="font-script text-4xl text-crimson">Naga Dileep &amp; Mounika Naga Lakshmi Durga</p>
+            <p class="font-cinzel text-xs sm:text-sm tracking-[0.22em] text-goldDark uppercase font-bold mt-2">
+                With Warm Regards &amp; Best Wishes from Both Families
+            </p>
+            <p class="font-cormorant italic text-base text-[#5C2A1D] mt-1">
+                We look forward to celebrating this sacred union with your gracious presence
+            </p>
+        </footer>
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- JAVASCRIPT: ANIMATIONS, AUDIO SYNTHESIZER & COUNTDOWN                 -->
+    <!-- ===================================================================== -->
+    <script>
+        // -------------------------------------------------------------------
+        // 1. GRAND OPENING ROYAL GATE TRANSITION
+        // -------------------------------------------------------------------
+        const openingOverlay = document.getElementById("opening-overlay");
+        const mainInvitation = document.getElementById("main-invitation");
+
+        function openRoyalGates() {
+            openingOverlay.classList.add("gates-opened");
+            mainInvitation.classList.add("invitation-active");
+            burstPetals(42);
+            startWeddingMusic();
+
+            setTimeout(() => {
+                openingOverlay.classList.add("hidden");
+            }, 1650);
+        }
+
+        function replayRoyalGates() {
+            openingOverlay.classList.remove("hidden");
+            mainInvitation.classList.remove("invitation-active");
+            void openingOverlay.offsetWidth;
+            openingOverlay.classList.remove("gates-opened");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        document.getElementById("open-invitation-btn").addEventListener("click", openRoyalGates);
+        document.getElementById("replay-btn").addEventListener("click", replayRoyalGates);
+
+        // -------------------------------------------------------------------
+        // 2. LIVE WEDDING COUNTDOWN TIMER
+        // -------------------------------------------------------------------
+        const targetDate = new Date("2026-11-26T10:30").getTime();
+
+        function updateCountdown() {
+            const now = Date.now();
+            const diff = Math.max(0, targetDate - now);
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const mins = Math.floor((diff / (1000 * 60)) % 60);
+            const secs = Math.floor((diff / 1000) % 60);
+
+            document.getElementById("cd-days").textContent = String(days).padStart(2, "0");
+            document.getElementById("cd-hours").textContent = String(hours).padStart(2, "0");
+            document.getElementById("cd-mins").textContent = String(mins).padStart(2, "0");
+            document.getElementById("cd-secs").textContent = String(secs).padStart(2, "0");
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // -------------------------------------------------------------------
+        // 3. WEB AUDIO SYNTHESIZER (AUSPICIOUS RAGA YAMAN CHIMES & TANPURA)
+        // -------------------------------------------------------------------
+        let audioCtx = null;
+        let isMusicPlaying = false;
+        let melodyInterval = null;
+        let droneNodes = [];
+
+        function startWeddingMusic() {
+            if (isMusicPlaying) return;
+            try {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContextClass) return;
+                if (!audioCtx) audioCtx = new AudioContextClass();
+                if (audioCtx.state === "suspended") audioCtx.resume();
+
+                isMusicPlaying = true;
+                updateMusicButtonUI();
+
+                const droneFreqs = [130.81, 196.00];
+                droneFreqs.forEach((freq) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = "sine";
+                    osc.frequency.value = freq;
+                    gain.gain.value = 0.025;
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    droneNodes.push({ osc, gain });
+                });
+
+                const yamanScale = [261.63, 293.66, 329.63, 369.99, 392.00, 440.00, 493.88, 523.25];
+                const motif = [4, 3, 2, 1, 0, 2, 4, 7, 6, 4, 2, 0];
+                let step = 0;
+
+                const playChime = () => {
+                    if (!isMusicPlaying || !audioCtx) return;
+                    const now = audioCtx.currentTime;
+                    const freq = yamanScale[motif[step % motif.length]];
+                    step++;
+
+                    const osc = audioCtx.createOscillator();
+                    const overtone = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+
+                    osc.type = "sine";
+                    osc.frequency.setValueAtTime(freq, now);
+                    overtone.type = "triangle";
+                    overtone.frequency.setValueAtTime(freq * 2, now);
+
+                    gain.gain.setValueAtTime(0.0001, now);
+                    gain.gain.exponentialRampToValueAtTime(0.06, now + 0.08);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.2);
+
+                    osc.connect(gain);
+                    overtone.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start(now);
+                    overtone.start(now);
+                    osc.stop(now + 2.3);
+                    overtone.stop(now + 2.3);
+                };
+
+                playChime();
+                melodyInterval = setInterval(playChime, 1350);
+            } catch (err) {
+                console.warn("Audio playback blocked or unavailable:", err);
+            }
+        }
+
+        function stopWeddingMusic() {
+            isMusicPlaying = false;
+            updateMusicButtonUI();
+            clearInterval(melodyInterval);
+            melodyInterval = null;
+            droneNodes.forEach(({ osc }) => {
+                try { osc.stop(); } catch (e) {}
+            });
+            droneNodes = [];
+        }
+
+        function updateMusicButtonUI() {
+            const icon = document.getElementById("music-icon");
+            const label = document.getElementById("music-label");
+            if (isMusicPlaying) {
+                icon.textContent = "🔊";
+                label.textContent = "Music On";
+            } else {
+                icon.textContent = "🔇";
+                label.textContent = "Play Music";
+            }
+        }
+
+        document.getElementById("music-toggle-btn").addEventListener("click", () => {
+            if (isMusicPlaying) {
+                stopWeddingMusic();
+            } else {
+                startWeddingMusic();
+            }
+        });
+
+        // -------------------------------------------------------------------
+        // 4. FLOATING ROSE PETALS & GOLD SPARKLES CANVAS
+        // -------------------------------------------------------------------
+        const petalCanvas = document.getElementById("petal-canvas");
+        const pCtx = petalCanvas.getContext("2d");
+        let petals = [];
+
+        function resizePetalCanvas() {
+            petalCanvas.width = window.innerWidth;
+            petalCanvas.height = window.innerHeight;
+        }
+        window.addEventListener("resize", resizePetalCanvas);
+        resizePetalCanvas();
+
+        function createParticle(fromTop = false) {
+            const isGold = Math.random() < 0.35;
+            return {
+                x: Math.random() * petalCanvas.width,
+                y: fromTop ? -20 : Math.random() * petalCanvas.height,
+                size: isGold ? (Math.random() * 3 + 2) : (Math.random() * 7 + 5),
+                speedY: Math.random() * 1.1 + 0.45,
+                speedX: (Math.random() - 0.5) * 0.8,
+                angle: Math.random() * Math.PI * 2,
+                spin: (Math.random() - 0.5) * 0.04,
+                isGold,
+                color: isGold ? "#F3E5AB" : (Math.random() < 0.5 ? "#B81D33" : "#D93848"),
+                alpha: Math.random() * 0.55 + 0.35
+            };
+        }
+
+        function initPetals() {
+            petals = [];
+            for (let i = 0; i < 28; i++) {
+                petals.push(createParticle(false));
+            }
+        }
+
+        function burstPetals(count) {
+            for (let i = 0; i < count; i++) {
+                const p = createParticle(true);
+                p.speedY += Math.random() * 1.6;
+                petals.push(p);
+            }
+            if (petals.length > 90) {
+                petals = petals.slice(petals.length - 90);
+            }
+        }
+
+        function animatePetals() {
+            pCtx.clearRect(0, 0, petalCanvas.width, petalCanvas.height);
+            petals.forEach((p, idx) => {
+                p.y += p.speedY;
+                p.x += p.speedX + Math.sin(p.angle) * 0.45;
+                p.angle += p.spin;
+
+                pCtx.save();
+                pCtx.translate(p.x, p.y);
+                pCtx.rotate(p.angle);
+                pCtx.globalAlpha = p.alpha;
+                pCtx.fillStyle = p.color;
+
+                if (p.isGold) {
+                    pCtx.beginPath();
+                    pCtx.arc(0, 0, p.size, 0, Math.PI * 2);
+                    pCtx.fill();
+                } else {
+                    pCtx.beginPath();
+                    pCtx.ellipse(0, 0, p.size, p.size * 0.6, 0, 0, Math.PI * 2);
+                    pCtx.fill();
+                }
+                pCtx.restore();
+
+                if (p.y > petalCanvas.height + 25) {
+                    petals[idx] = createParticle(true);
+                }
+            });
+            requestAnimationFrame(animatePetals);
+        }
+
+        window.addEventListener("load", () => {
+            initPetals();
+            animatePetals();
+        });
+    </script>
+</body>
+</html>
